@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/kjhank/POZ_FER_S_14_REACT_React#readme",
   "dependencies": {
-    "react": "^15.4.0",
-    "react-dom": "^15.4.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
     "react-router-dom": "^4.3.1",
     "whatwg-fetch": "^3.0.0"
   },
