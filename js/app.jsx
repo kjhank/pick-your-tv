@@ -28,8 +28,43 @@ document.addEventListener('DOMContentLoaded', function() {
   class Seating extends React.Component {
     render() {
       return <form>
+        <h2>Seating:</h2>
         <label htmlFor="wideangle">
           <input type="checkbox" id="wideangle"/>wide angle seating
+        </label>
+        <label htmlFor="distance">Watching distance
+          <select id="distance">
+            <option value="less than 1m">⩽1</option>
+            <option value="less than 1.5">1-1.5m</option>
+            <option value="less than 2m">1.5-2m</option>
+            <option value="less than 2.5m">2-2.5m</option>
+            <option value="less than 3m">2.5-3m</option>
+            <option value="less than 2.5m">3-3.5m</option>
+            <option value="less than 3m">3.5-4m</option>
+          </select>
+        </label>
+      </form>
+    }
+  }
+
+  class MainUse extends React.Component {
+    render() {
+      return <form>
+        <label htmlFor="movies-radio">
+          <input type="radio" value="Movies" name="main-use" id="radio-movies"/>
+          Movies
+        </label>
+        <label htmlFor="gaming-radio">
+          <input type="radio" value="Gaming" name="main-use" id="gaming-radio"/>
+          Gaming
+        </label>
+        <label htmlFor="sports-radio">
+          <input type="radio" value="Sports" name="main-use" id="sports-radio"/>
+          Sports
+        </label>
+        <label htmlFor="generic-radio">
+          <input type="radio" value="Generic" name="main-use" id="generic-radio"/>
+          Generic
         </label>
       </form>
     }
@@ -63,8 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div>
           <MainHeader title={this.props.title}/>
           <Switch>
-            <Route exact="exact" path="/" component={SplashScreen}/>
-            <Route exact="exact" path="/seating/" component={Seating}/>
+            <Route exact path="/" component={SplashScreen}/>
+            <Route exact path="/seating/" component={Seating}/>
+            <Route exact path="/main-use/" component={MainUse}/>
             <Route component={FouOhFour}/>
           </Switch>
           <Navigation/>
