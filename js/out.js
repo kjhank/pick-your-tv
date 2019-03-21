@@ -224,6 +224,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// import { specs } from '../Context/Context.jsx';
+
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
@@ -234,9 +237,34 @@ var App = function (_React$Component) {
 
     _this.state = {
       title: _this.props.title,
-      nextLink: 'seating',
-      prevLink: '',
-      choices: {}
+      specs: {
+        distance: 'less than 2m',
+        wideangle: false,
+        mainUse: 'Movies',
+        usageTime: 'Daytime',
+        brightness: 'bright',
+        smartType: 'fast',
+        googleCast: false,
+        airPlay: false,
+        smartHomeControl: false,
+        oneRemote: false,
+        advancedGameMode: false,
+        priceRange: 'high-end',
+        dislikedLg: true,
+        dislikedPanasonic: false,
+        dislikedSamsung: false,
+        dislikedSony: false,
+        dislikedTcl: false,
+        dislikedTpv: false,
+        dvbt: false,
+        dvbc: false,
+        dvbs: false,
+        twinTuner: false,
+        hdmis: 'hdmi4',
+        headphoneJack: false,
+        hdmi20: false,
+        bluetooth: false
+      }
     };
     return _this;
   }
@@ -249,6 +277,8 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         _reactRouterDom.HashRouter,
         null,
@@ -257,8 +287,12 @@ var App = function (_React$Component) {
           _reactRouterDom.Switch,
           null,
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Landing2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/main/', component: _Main2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/results/', component: _Results2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/main/', component: function component() {
+              return _react2.default.createElement(_Main2.default, { specs: _this2.state.specs });
+            } }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/results/', component: function component() {
+              return _react2.default.createElement(_Results2.default, { specs: _this2.state.specs });
+            } }),
           _react2.default.createElement(_reactRouterDom.Route, { component: _FourOhFour2.default })
         ),
         _react2.default.createElement(_Footer2.default, null)
@@ -310,10 +344,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Brightness = function (_React$Component) {
   _inherits(Brightness, _React$Component);
 
-  function Brightness() {
+  function Brightness(props) {
     _classCallCheck(this, Brightness);
 
-    return _possibleConstructorReturn(this, (Brightness.__proto__ || Object.getPrototypeOf(Brightness)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Brightness.__proto__ || Object.getPrototypeOf(Brightness)).call(this, props));
+
+    _this.brightnessChange = function (event) {
+      return _this.setState({ brightness: event.target.value });
+    };
+
+    _this.state = {
+      brightness: _this.props.brightness
+    };
+    return _this;
   }
 
   _createClass(Brightness, [{
@@ -321,55 +364,88 @@ var Brightness = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: this.props.initialClass + ' brightness-section', id: 'brightness-section' },
         _react2.default.createElement(
           'h2',
           null,
           'Room brightness'
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-bright' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'bright',
-            name: 'room-brightness',
-            id: 'radio-bright'
-          }),
-          'Lots of light & sunshine'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-moderate' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'moderate',
-            name: 'room-brightness',
-            id: 'radio-moderate'
-          }),
-          'Moderate light'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-black' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'black',
-            name: 'room-brightness',
-            id: 'radio-black'
-          }),
-          'Pitch-black room'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-blinds' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'blinds',
-            name: 'room-brightness',
-            id: 'radio-blinds'
-          }),
-          'Don\'t care - using blinds'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'How bright is your room?'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'bright',
+              name: 'room-brightness',
+              id: 'radio-bright',
+              checked: this.state.brightness === 'bright',
+              onChange: this.brightnessChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-bright', className: 'radiolabel' },
+              'Lots of light & sunshine'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'moderate',
+              name: 'room-brightness',
+              id: 'radio-moderate',
+              checked: this.state.brightness === 'moderate',
+              onChange: this.brightnessChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-moderate', className: 'radiolabel' },
+              'Moderate light'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'black',
+              name: 'room-brightness',
+              id: 'radio-black',
+              checked: this.state.brightness === 'black',
+              onChange: this.brightnessChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-black', className: 'radiolabel' },
+              'Pitch-black'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'blinds',
+              name: 'room-brightness',
+              id: 'radio-blinds',
+              checked: this.state.brightness === 'blinds',
+              onChange: this.brightnessChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-blinds', className: 'radiolabel' },
+              'Don\'t care - using blinds'
+            )
+          )
         )
       );
     }
@@ -419,10 +495,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var BroadcastTv = function (_React$Component) {
   _inherits(BroadcastTv, _React$Component);
 
-  function BroadcastTv() {
+  function BroadcastTv(props) {
     _classCallCheck(this, BroadcastTv);
 
-    return _possibleConstructorReturn(this, (BroadcastTv.__proto__ || Object.getPrototypeOf(BroadcastTv)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (BroadcastTv.__proto__ || Object.getPrototypeOf(BroadcastTv)).call(this, props));
+
+    _this.dvbtChange = function (event) {
+      return _this.setState({ dvbt: !_this.state.dvbt });
+    };
+
+    _this.dvbcChange = function (event) {
+      return _this.setState({ dvbc: !_this.state.dvbc });
+    };
+
+    _this.dvbsChange = function (event) {
+      return _this.setState({ dvbs: !_this.state.dvbs });
+    };
+
+    _this.twinTunerChange = function (event) {
+      return _this.setState({ twinTuner: !_this.state.twinTuner });
+    };
+
+    _this.state = {
+      dvbt: _this.props.dvbt,
+      dvbc: _this.props.dvbc,
+      dvbs: _this.props.dvbs,
+      twinTuner: _this.props.twinTuner
+    };
+    return _this;
   }
 
   _createClass(BroadcastTv, [{
@@ -430,56 +530,100 @@ var BroadcastTv = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        {
+          className: this.props.initialClass + ' broadcasttv-section',
+          id: 'broadcasttv-section'
+        },
         _react2.default.createElement(
           'h2',
           null,
           'Broadcast TV'
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-none' },
-          _react2.default.createElement('input', { type: 'radio', value: 'none', id: 'radio-none', name: 'broadcast' }),
-          'none'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Which tuners?'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'third' },
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'dvb-t',
+              id: 'checkbox-dvbt',
+              name: 'broadcast',
+              checked: this.state.dvbt,
+              onChange: this.dvbtChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-dvbt' },
+              'Terrestial'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'third' },
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'dvb-c',
+              id: 'checkbox-dvbc',
+              name: 'broadcast',
+              checked: this.state.dvbc,
+              onChange: this.dvbcChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-dvbc' },
+              'Cable'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'third' },
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'dvb-s',
+              id: 'checkbox-dvbs',
+              name: 'broadcast',
+              checked: this.state.dvbs,
+              onChange: this.dvbsChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-dvbs' },
+              'Satelite'
+            )
+          )
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-dvbt' },
-          _react2.default.createElement('input', {
-            type: 'checkbox',
-            value: 'dvb-t',
-            id: 'checkbox-dvbt',
-            name: 'broadcast'
-          }),
-          'Terrestial'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-dvbc' },
-          _react2.default.createElement('input', {
-            type: 'checkbox',
-            value: 'dvb-c',
-            id: 'checkbox-dvbc',
-            name: 'broadcast'
-          }),
-          'Cable'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-dvbs' },
-          _react2.default.createElement('input', {
-            type: 'checkbox',
-            value: 'dvb-s',
-            id: 'checkbox-dvbs',
-            name: 'broadcast'
-          }),
-          'Satelite'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-twintuner' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'twin tuner', id: 'checkbox-twintuner', name: 'broadcast' }),
-          'Twin tuner'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Do you need twin tuners?'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'twin tuner',
+              id: 'checkbox-twintuner',
+              name: 'broadcast',
+              checked: this.state.twinTuner,
+              onChange: this.twinTunerChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-twintuner' },
+              'Twin tuner'
+            )
+          )
         )
       );
     }
@@ -541,7 +685,7 @@ var Copyleft = function (_React$Component) {
       return _react2.default.createElement(
         'svg',
         { className: 'copyleft-icon', xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 980 980' },
-        _react2.default.createElement('circle', { cx: '490', cy: '490', r: '440', fill: 'none', stroke: '#234669', strokeWidth: '100' }),
+        _react2.default.createElement('circle', { cx: '490', cy: '490', r: '440', fill: 'none', stroke: '#ede6e3', strokeWidth: '100' }),
         _react2.default.createElement('path', { d: 'M219,428H350a150,150 0 1 1 0,125H219a275,275 0 1 0 0-125z' })
       );
     }
@@ -588,13 +732,49 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// const dislikedBrands = ['lg', 'panasonic', 'samsung', 'sony', 'tcl', 'tpv']
+
 var DislikedBrands = function (_React$Component) {
   _inherits(DislikedBrands, _React$Component);
 
-  function DislikedBrands() {
+  function DislikedBrands(props) {
     _classCallCheck(this, DislikedBrands);
 
-    return _possibleConstructorReturn(this, (DislikedBrands.__proto__ || Object.getPrototypeOf(DislikedBrands)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (DislikedBrands.__proto__ || Object.getPrototypeOf(DislikedBrands)).call(this, props));
+
+    _this.lgChange = function (event) {
+      return _this.setState({ dislikedLg: !_this.state.dislikedLg });
+    };
+
+    _this.panasonicChange = function (event) {
+      return _this.setState({ dislikedPanasonic: !_this.state.dislikedPanasonic });
+    };
+
+    _this.samsungChange = function (event) {
+      return _this.setState({ dislikedSamsung: !_this.state.dislikedSamsung });
+    };
+
+    _this.sonyChange = function (event) {
+      return _this.setState({ dislikedSony: !_this.state.dislikedSony });
+    };
+
+    _this.tclChange = function (event) {
+      return _this.setState({ dislikedTcl: !_this.state.dislikedTcl });
+    };
+
+    _this.tpvChange = function (event) {
+      return _this.setState({ dislikedTpv: !_this.state.dislikedTpv });
+    };
+
+    _this.state = {
+      dislikedLg: _this.props.dislikedLg,
+      dislikedPanasonic: _this.props.dislikedPanasonic,
+      dislikedSamsung: _this.props.dislikedSamsung,
+      dislikedSony: _this.props.dislikedSony,
+      dislikedTcl: _this.props.dislikedTcl,
+      dislikedTpv: _this.props.dislikedTpv
+    };
+    return _this;
   }
 
   _createClass(DislikedBrands, [{
@@ -602,47 +782,116 @@ var DislikedBrands = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: this.props.initialClass + ' dislikedbrands-section', id: 'dislikedbrands-section' },
         _react2.default.createElement(
           'h2',
           null,
           'Disliked Brands'
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-lg' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'lg', id: 'checkbox-lg', defaultChecked: true }),
-          'LG'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-panasonic' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'panasonic', id: 'checkbox-panasonic' }),
-          'Panasonic'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-tpv' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'tp vision', id: 'checkbox-tpv' }),
-          'TP Vision'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-samsung' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'samsung', id: 'checkbox-samsung' }),
-          'Samsung'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-sony' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'sony', id: 'checkbox-sony' }),
-          'Sony'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-tcl' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'tcl', id: 'checkbox-tcl' }),
-          'TCL'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Do you dislike any of the following brands?'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'lg',
+              id: 'checkbox-lg',
+              checked: this.state.dislikedLg,
+              onChange: this.lgChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-lg' },
+              'LG'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'panasonic',
+              id: 'checkbox-panasonic',
+              checked: this.state.dislikedPanasonic,
+              onChange: this.panasonicChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-panasonic' },
+              'Panasonic'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'samsung',
+              id: 'checkbox-samsung',
+              checked: this.state.dislikedSamsung,
+              onChange: this.samsungChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-samsung' },
+              'Samsung'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'sony',
+              id: 'checkbox-sony',
+              checked: this.state.dislikedSony,
+              onChange: this.sonyChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-sony' },
+              'Sony'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'tcl',
+              id: 'checkbox-tcl',
+              checked: this.state.dislikedTcl,
+              onChange: this.tclChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-tcl' },
+              'TCL'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'tp vision',
+              id: 'checkbox-tpv',
+              checked: this.state.dislikedTpv,
+              onChange: this.tpvChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-tpv' },
+              'TP Vision'
+            )
+          )
         )
       );
     }
@@ -707,7 +956,7 @@ var Footer = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'footer',
-        null,
+        { className: 'main-footer' },
         _react2.default.createElement(_Copyleft2.default, { className: 'icon copyleft-icon' }),
         ' 2019 kjhank'
       );
@@ -808,6 +1057,10 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
+var _Navigation = __webpack_require__(/*! ../Navigation/Navigation.jsx */ "./js/components/Navigation/Navigation.jsx");
+
+var _Navigation2 = _interopRequireDefault(_Navigation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -819,10 +1072,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var InputOutput = function (_React$Component) {
   _inherits(InputOutput, _React$Component);
 
-  function InputOutput() {
+  function InputOutput(props) {
     _classCallCheck(this, InputOutput);
 
-    return _possibleConstructorReturn(this, (InputOutput.__proto__ || Object.getPrototypeOf(InputOutput)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (InputOutput.__proto__ || Object.getPrototypeOf(InputOutput)).call(this, props));
+
+    _this.changeHdmis = function (event) {
+      return _this.setState({ hdmis: event.target.value });
+    };
+
+    _this.headphoneJackChange = function (event) {
+      return _this.setState({ headphoneJack: !_this.state.headphoneJack });
+    };
+
+    _this.hdmi20Change = function (event) {
+      return _this.setState({ hdmi20: !_this.state.hdmi20 });
+    };
+
+    _this.bluetoothChange = function (event) {
+      return _this.setState({ bluetooth: !_this.state.bluetooth });
+    };
+
+    _this.state = {
+      hdmis: _this.props.hdmis,
+      headphoneJack: _this.props.headphoneJack,
+      hdmi20: _this.props.hdmi20,
+      bluetooth: _this.props.bluetooth
+    };
+    return _this;
   }
 
   _createClass(InputOutput, [{
@@ -830,7 +1107,10 @@ var InputOutput = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        {
+          className: this.props.initialClass + ' inputoutput-section',
+          id: 'inputoutput-section'
+        },
         _react2.default.createElement(
           'h2',
           null,
@@ -840,44 +1120,103 @@ var InputOutput = function (_React$Component) {
           'div',
           { className: 'wrapper' },
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'hdmi3' },
-            _react2.default.createElement('input', { type: 'radio', id: 'hdmi3' }),
-            '3 HDMIs'
+            'h2',
+            null,
+            'How many HDMI inputs do you need?'
           ),
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'hdmi4' },
-            _react2.default.createElement('input', { type: 'radio', id: 'hdmi4' }),
-            '4 HDMIs'
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              id: 'hdmi3',
+              name: 'hdmis',
+              value: 'hdmi3',
+              checked: this.state.hdmis === 'hdmi3',
+              onChange: this.changeHdmis
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'hdmi3', className: 'radiolabel' },
+              '3 HDMIs'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              id: 'hdmi4',
+              name: 'hdmis',
+              value: 'hdmi4',
+              checked: this.state.hdmis === 'hdmi4',
+              onChange: this.changeHdmis
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'hdmi4', className: 'radiolabel' },
+              '4 HDMIs'
+            )
           )
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-headphone' },
-          _react2.default.createElement('input', {
-            type: 'checkbox',
-            value: 'headphone jack',
-            id: 'checkbox-headphone'
-          }),
-          'Headphone jack'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Do you need any of the following features?'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'headphone jack',
+              id: 'checkbox-headphone',
+              checked: this.state.headphoneJack,
+              onChange: this.headphoneJackChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-headphone' },
+              'Headphone jack'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'all HDMI2.0bs',
+              id: 'checkbox-hdmi20',
+              checked: this.state.hdmi20,
+              onChange: this.hdmi20Change
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-hdmi20' },
+              'all HDMIs 2.0b'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'bluetooth audio',
+              id: 'checkbox-bluetooth',
+              checked: this.state.bluetooth,
+              onChange: this.bluetoothChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-bluetooth' },
+              'Bluetooth audio'
+            )
+          )
         ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-hdmi20' },
-          _react2.default.createElement('input', { type: 'checkbox', value: 'all HDMI2.0bs', id: 'checkbox-hdmi20' }),
-          'all HDMIs 2.0b'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'checkbox-bluetooth' },
-          _react2.default.createElement('input', {
-            type: 'checkbox',
-            value: 'bluetooth audio',
-            id: 'checkbox-bluetooth'
-          }),
-          'Bluetooth audio'
-        )
+        _react2.default.createElement(_Navigation2.default, { link: 'results' })
       );
     }
   }]);
@@ -945,7 +1284,7 @@ var UsageTime = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'landing' },
         _react2.default.createElement(_SplashScreen2.default, null),
         _react2.default.createElement(_Navigation2.default, { link: 'main' })
       );
@@ -984,6 +1323,8 @@ var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/i
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+var _reactRouterHashLink = __webpack_require__(/*! react-router-hash-link */ "./node_modules/react-router-hash-link/lib/index.js");
 
 var _Seating = __webpack_require__(/*! ../Seating/Seating.jsx */ "./js/components/Seating/Seating.jsx");
 
@@ -1036,32 +1377,104 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Main = function (_React$Component) {
   _inherits(Main, _React$Component);
 
-  function Main() {
+  function Main(props) {
     _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+    _this.state = {
+      specs: _this.props.specs
+    };
+    return _this;
   }
 
   _createClass(Main, [{
     key: 'render',
     value: function render() {
+      console.log(this.state.specs.distance);
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'form',
-          null,
-          _react2.default.createElement(_Seating2.default, null),
-          _react2.default.createElement(_MainUse2.default, null),
-          _react2.default.createElement(_UsageTime2.default, null),
-          _react2.default.createElement(_Brightness2.default, null),
-          _react2.default.createElement(_SmartFeatures2.default, null),
-          _react2.default.createElement(_PriceRange2.default, null),
-          _react2.default.createElement(_DislikedBrands2.default, null),
-          _react2.default.createElement(_BroadcastTv2.default, null),
-          _react2.default.createElement(_InputOutput2.default, null)
-        ),
-        _react2.default.createElement(_Navigation2.default, { link: 'results' })
+          { className: 'features' },
+          _react2.default.createElement(_Seating2.default, {
+            distance: this.state.specs.distance,
+            wideangle: this.state.specs.wideangle
+          }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#mainuse-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_MainUse2.default, { mainUse: this.state.specs.mainUse }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#usagetime-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_UsageTime2.default, { usageTime: this.state.specs.usageTime }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#brightness-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_Brightness2.default, { brightness: this.state.specs.brightness }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#smarttype-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_SmartFeatures2.default, {
+            smartType: this.state.specs.smartType,
+            googleCast: this.state.specs.googleCast,
+            airPlay: this.state.specs.airPlay,
+            smartHomeControl: this.state.specs.smartHomeControl,
+            oneRemote: this.state.specs.oneRemote,
+            advancedGameMode: this.state.specs.advancedGameMode
+          }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#pricerange-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_PriceRange2.default, { priceRange: this.state.specs.priceRange }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#dislikedbrands-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_DislikedBrands2.default, {
+            dislikedLg: this.state.specs.dislikedLg,
+            dislikedPanasonic: this.state.specs.dislikedPanasonic,
+            dislikedSamsung: this.state.specs.dislikedSamsung,
+            dislikedSony: this.state.specs.dislikedSony,
+            dislikedTcl: this.state.specs.dislikedTcl,
+            dislikedTpv: this.state.specs.dislikedTpv
+          }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#broadcasttv-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_BroadcastTv2.default, {
+            dvbt: this.state.specs.dvbt,
+            dvbc: this.state.specs.dvbc,
+            dvbs: this.state.specs.dvbs,
+            twinTuner: this.state.specs.twinTuner
+          }),
+          _react2.default.createElement(
+            _reactRouterHashLink.HashLink,
+            { to: '/main#inputoutput-section' },
+            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-down icon next-section-icon' })
+          ),
+          _react2.default.createElement(_InputOutput2.default, {
+            hdmis: this.state.specs.hdmis,
+            headphoneJack: this.state.specs.headphoneJack,
+            hdmi20: this.state.specs.hdmi20,
+            bluetooth: this.state.specs.bluetooth
+          })
+        )
       );
     }
   }]);
@@ -1122,7 +1535,11 @@ var MainHeader = function (_React$Component) {
       return _react2.default.createElement(
         'header',
         { className: 'main-header' },
-        this.props.title
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/' },
+          this.props.title
+        )
       );
     }
   }]);
@@ -1171,10 +1588,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MainUse = function (_React$Component) {
   _inherits(MainUse, _React$Component);
 
-  function MainUse() {
+  function MainUse(props) {
     _classCallCheck(this, MainUse);
 
-    return _possibleConstructorReturn(this, (MainUse.__proto__ || Object.getPrototypeOf(MainUse)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (MainUse.__proto__ || Object.getPrototypeOf(MainUse)).call(this, props));
+
+    _this.mainUseChange = function (event) {
+      _this.setState({ mainUse: event.target.value });
+    };
+
+    _this.state = {
+      mainUse: _this.props.mainUse
+    };
+    return _this;
   }
 
   _createClass(MainUse, [{
@@ -1182,50 +1608,91 @@ var MainUse = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        {
+          className: this.props.initialClass + ' mainuse-section',
+          id: 'mainuse-section'
+        },
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'movies-radio' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'Movies',
-            name: 'main-use',
-            id: 'movies-radio'
-          }),
-          'Movies'
+          'h2',
+          null,
+          'Main use'
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'gaming-radio' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'Gaming',
-            name: 'main-use',
-            id: 'gaming-radio'
-          }),
-          'Gaming'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'sports-radio' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'Sports',
-            name: 'main-use',
-            id: 'sports-radio'
-          }),
-          'Sports'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'generic-radio' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'Generic',
-            name: 'main-use',
-            id: 'generic-radio'
-          }),
-          'Generic'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'What will be the main use of your TV?'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'Movies',
+              name: 'main-use',
+              id: 'movies-radio',
+              checked: this.state.mainUse === 'Movies',
+              onChange: this.mainUseChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'movies-radio', className: 'radiolabel' },
+              'Movies'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'Gaming',
+              name: 'main-use',
+              id: 'gaming-radio',
+              checked: this.state.mainUse === 'Gaming',
+              onChange: this.mainUseChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'gaming-radio', className: 'radiolabel' },
+              'Gaming'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'Sports',
+              name: 'main-use',
+              id: 'sports-radio',
+              checked: this.state.mainUse === 'Sports',
+              onChange: this.mainUseChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'sports-radio', className: 'radiolabel' },
+              'Sports'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'Generic',
+              name: 'main-use',
+              id: 'generic-radio',
+              checked: this.state.mainUse === 'Generic',
+              onChange: this.mainUseChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'generic-radio', className: 'radiolabel' },
+              'Generic'
+            )
+          )
         )
       );
     }
@@ -1291,7 +1758,7 @@ var Navigation = function (_React$Component) {
           _react2.default.createElement(
             _reactRouterDom.Link,
             { to: this.props.link },
-            _react2.default.createElement('i', { className: 'fas fa-chevron-circle-right next-icon icon' })
+            _react2.default.createElement('i', { className: 'fas fa-play play-icon icon' })
           ),
           _react2.default.createElement(
             _reactRouterDom.Link,
@@ -1357,10 +1824,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var PriceRange = function (_React$Component) {
   _inherits(PriceRange, _React$Component);
 
-  function PriceRange() {
+  function PriceRange(props) {
     _classCallCheck(this, PriceRange);
 
-    return _possibleConstructorReturn(this, (PriceRange.__proto__ || Object.getPrototypeOf(PriceRange)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (PriceRange.__proto__ || Object.getPrototypeOf(PriceRange)).call(this, props));
+
+    _this.priceRangeChange = function (event) {
+      return _this.setState({ priceRange: event.target.value });
+    };
+
+    _this.state = {
+      priceRange: _this.props.priceRange
+    };
+    return _this;
   }
 
   _createClass(PriceRange, [{
@@ -1368,44 +1844,71 @@ var PriceRange = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: this.props.initialClass + ' pricerange-section', id: 'pricerange-section' },
         _react2.default.createElement(
           'h2',
           null,
           'Price range'
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-highend' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'high-end',
-            id: 'radio-highend',
-            name: 'pricerange'
-          }),
-          'High-end'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-midrange' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'mid-range',
-            id: 'radio-midrange',
-            name: 'pricerange'
-          }),
-          'Mid-range'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-budget' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'budget-friendly',
-            id: 'radio-budget',
-            name: 'pricerange'
-          }),
-          'Budget-friendly'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'What is your price range?'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'high-end',
+              id: 'radio-highend',
+              name: 'pricerange',
+              checked: this.state.priceRange === 'high-end',
+              onChange: this.priceRangeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-highend', className: 'radiolabel' },
+              'High-end'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'mid-range',
+              id: 'radio-midrange',
+              name: 'pricerange',
+              checked: this.state.priceRange === 'mid-range',
+              onChange: this.priceRangeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-midrange', className: 'radiolabel' },
+              'Mid-range'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'budget-friendly',
+              id: 'radio-budget',
+              name: 'pricerange',
+              checked: this.state.priceRange === 'budget-friendly',
+              onChange: this.priceRangeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-budget', className: 'radiolabel' },
+              'Budget-friendly'
+            )
+          )
         )
       );
     }
@@ -1456,18 +1959,24 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var InputOutput = function (_React$Component) {
-  _inherits(InputOutput, _React$Component);
+var Results = function (_React$Component) {
+  _inherits(Results, _React$Component);
 
-  function InputOutput() {
-    _classCallCheck(this, InputOutput);
+  function Results(props) {
+    _classCallCheck(this, Results);
 
-    return _possibleConstructorReturn(this, (InputOutput.__proto__ || Object.getPrototypeOf(InputOutput)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).call(this, props));
+
+    _this.state = {
+      specs: _this.props.specs
+    };
+    return _this;
   }
 
-  _createClass(InputOutput, [{
+  _createClass(Results, [{
     key: 'render',
     value: function render() {
+      console.log(this.state.specs);
       return _react2.default.createElement(
         'div',
         null,
@@ -1481,10 +1990,10 @@ var InputOutput = function (_React$Component) {
     }
   }]);
 
-  return InputOutput;
+  return Results;
 }(_react2.default.Component);
 
-exports.default = InputOutput;
+exports.default = Results;
 
 /***/ }),
 
@@ -1525,71 +2034,104 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Seating = function (_React$Component) {
   _inherits(Seating, _React$Component);
 
-  function Seating() {
+  function Seating(props) {
     _classCallCheck(this, Seating);
 
-    return _possibleConstructorReturn(this, (Seating.__proto__ || Object.getPrototypeOf(Seating)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Seating.__proto__ || Object.getPrototypeOf(Seating)).call(this, props));
+
+    _this.distanceChange = function (event) {
+      _this.setState({ distance: event.target.value });
+    };
+
+    _this.wideangleChange = function (event) {
+      _this.setState({ wideangle: !_this.state.wideangle });
+    };
+
+    _this.state = {
+      distance: _this.props.distance,
+      wideangle: _this.props.wideangle
+    };
+    return _this;
   }
 
   _createClass(Seating, [{
     key: 'render',
     value: function render() {
+      // console.log(this.state);
       return _react2.default.createElement(
         'div',
-        null,
+        { className: this.props.initialClass + ' seating-section', id: 'seating-section' },
         _react2.default.createElement(
           'h2',
           null,
-          'Seating:'
+          'Seating'
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'wideangle' },
-          _react2.default.createElement('input', { type: 'checkbox', id: 'wideangle' }),
-          'wide angle seating'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'distance' },
-          'Watching distance',
+          'div',
+          { className: 'wrapper' },
           _react2.default.createElement(
-            'select',
-            { id: 'distance' },
+            'h2',
+            null,
+            'Whate will be your watching distance?'
+          ),
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'distance', className: 'selectlabel' },
+            'Watching distance',
             _react2.default.createElement(
-              'option',
-              { value: 'less than 1m' },
-              '\u2A7D1'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: 'less than 1.5' },
-              '1-1.5m'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: 'less than 2m' },
-              '1.5-2m'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: 'less than 2.5m' },
-              '2-2.5m'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: 'less than 3m' },
-              '2.5-3m'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: 'less than 2.5m' },
-              '3-3.5m'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: 'less than 3m' },
-              '3.5-4m'
+              'select',
+              {
+                id: 'distance',
+                value: this.state.distance,
+                onChange: this.distanceChange
+              },
+              _react2.default.createElement(
+                'option',
+                { value: 'less than 1m' },
+                '\u2A7D1m'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'less than 1.5m' },
+                '1-1.5m'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'less than 2m' },
+                '1.5-2m'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'less than 2.5m' },
+                '2-2.5m'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'less than 3m' },
+                '2.5-3m'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'less than 2.5m' },
+                '3-3.5m'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'less than 3m' },
+                '3.5-4m'
+              )
             )
+          ),
+          _react2.default.createElement('input', {
+            type: 'checkbox',
+            id: 'wideangle',
+            onChange: this.wideangleChange,
+            checked: this.state.wideangle
+          }),
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'wideangle' },
+            'wide angle seating'
           )
         )
       );
@@ -1640,10 +2182,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var SmartFeatures = function (_React$Component) {
   _inherits(SmartFeatures, _React$Component);
 
-  function SmartFeatures() {
+  function SmartFeatures(props) {
     _classCallCheck(this, SmartFeatures);
 
-    return _possibleConstructorReturn(this, (SmartFeatures.__proto__ || Object.getPrototypeOf(SmartFeatures)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (SmartFeatures.__proto__ || Object.getPrototypeOf(SmartFeatures)).call(this, props));
+
+    _this.smartTypeChange = function (event) {
+      return _this.setState({ smartType: event.target.value });
+    };
+
+    _this.googleCastChange = function (event) {
+      _this.setState({ googleCast: !_this.state.googleCast });
+    };
+
+    _this.airPlayChange = function (event) {
+      _this.setState({ airPlay: !_this.state.airPlay });
+    };
+
+    _this.smartHomeControlChange = function (event) {
+      _this.setState({ smartHomeControl: !_this.state.smartHomeControl });
+    };
+
+    _this.oneRemoteChange = function (event) {
+      _this.setState({ oneRemote: !_this.state.oneRemote });
+    };
+
+    _this.advancedGameModeChange = function (event) {
+      _this.setState({ advancedGameMode: !_this.state.advancedGameMode });
+    };
+
+    _this.state = {
+      smartType: _this.props.smartType,
+      googleCast: _this.props.googleCast,
+      airPlay: _this.props.airPlay,
+      smartHomeControl: _this.props.smartHomeControl,
+      oneRemote: _this.props.oneRemote,
+      advancedGameMode: _this.props.advancedGameMode
+    };
+    return _this;
   }
 
   _createClass(SmartFeatures, [{
@@ -1651,55 +2227,142 @@ var SmartFeatures = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: this.props.initialClass + ' smarttype-section', id: 'smarttype-section' },
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Smart features'
+        ),
         _react2.default.createElement(
           'div',
           { className: 'wrapper' },
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'radio-fast' },
-            _react2.default.createElement('input', { type: 'radio', value: 'fast', name: 'smart-type', id: 'radio-fast' }),
-            'fast & intuitive'
+            'h2',
+            null,
+            'Which type of smart TV platform do you prefer?'
           ),
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'radio-slow' },
-            _react2.default.createElement('input', { type: 'radio', value: 'slow', name: 'smart-type', id: 'radio-slow' }),
-            'powerful but slower'
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'fast',
+              name: 'smart-type',
+              id: 'radio-fast',
+              checked: this.state.smartType === 'fast',
+              onChange: this.smartTypeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-fast', className: 'radiolabel' },
+              'fast & intuitive'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'slow',
+              name: 'smart-type',
+              id: 'radio-slow',
+              checked: this.state.smartType === 'slow',
+              onChange: this.smartTypeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-slow', className: 'radiolabel' },
+              'powerful but slower'
+            )
           )
         ),
         _react2.default.createElement(
           'div',
           { className: 'wrapper' },
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'checkbox-googlecast' },
-            _react2.default.createElement('input', { type: 'checkbox', value: 'googlecast', id: 'checkbox-googlecast' }),
-            'google cast'
+            'h2',
+            null,
+            'Which of the following features do you need?'
           ),
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'checkbox-airplay' },
-            _react2.default.createElement('input', { type: 'checkbox', value: 'airplay', id: 'checkbox-airplay' }),
-            'airplay'
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'googlecast',
+              id: 'checkbox-googlecast',
+              checked: this.state.googleCast,
+              onChange: this.googleCastChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-googlecast' },
+              'google cast'
+            )
           ),
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'checkbox-smarthome' },
-            _react2.default.createElement('input', { type: 'checkbox', value: 'smart home', id: 'checkbox-smarthome' }),
-            'smart home control'
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'airplay',
+              id: 'checkbox-airplay',
+              checked: this.state.airPlay,
+              onChange: this.airPlayChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-airplay' },
+              'airplay'
+            )
           ),
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'checkbox-oneremote' },
-            _react2.default.createElement('input', { type: 'checkbox', value: 'one remote', id: 'checkbox-oneremote' }),
-            'one-remote'
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'smart home',
+              id: 'checkbox-smarthome',
+              checked: this.state.smartHomeControl,
+              onChange: this.smartHomeControlChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-smarthome' },
+              'smart home control'
+            )
           ),
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'checkbox-gamemode' },
-            _react2.default.createElement('input', { type: 'checkbox', value: 'gamemode', id: 'checkbox-gamemode' }),
-            'advanced game mode'
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'one remote',
+              id: 'checkbox-oneremote',
+              checked: this.state.oneRemote,
+              onChange: this.oneRemoteChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-oneremote' },
+              'one-remote'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'checkbox',
+              value: 'gamemode',
+              id: 'checkbox-gamemode',
+              checked: this.state.advancedGameMode,
+              onChange: this.advancedGameModeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'checkbox-gamemode' },
+              'advanced game mode'
+            )
           )
         )
       );
@@ -1815,10 +2478,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var UsageTime = function (_React$Component) {
   _inherits(UsageTime, _React$Component);
 
-  function UsageTime() {
+  function UsageTime(props) {
     _classCallCheck(this, UsageTime);
 
-    return _possibleConstructorReturn(this, (UsageTime.__proto__ || Object.getPrototypeOf(UsageTime)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (UsageTime.__proto__ || Object.getPrototypeOf(UsageTime)).call(this, props));
+
+    _this.usageTimeChange = function (event) {
+      return _this.setState({ usageTime: event.target.value });
+    };
+
+    _this.state = {
+      usageTime: _this.props.usageTime
+    };
+    return _this;
   }
 
   _createClass(UsageTime, [{
@@ -1826,34 +2498,71 @@ var UsageTime = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: this.props.initialClass + ' usagetime-section', id: 'usagetime-section' },
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'daytime-radio' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'daytime',
-            name: 'usage-time',
-            id: 'daytime-radio'
-          }),
-          'Daytime'
+          'h2',
+          null,
+          'Usage time'
         ),
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'nighttime-radio' },
-          _react2.default.createElement('input', {
-            type: 'radio',
-            value: 'nighttime',
-            name: 'usage-time',
-            id: 'nighttime-radio'
-          }),
-          'Night-time'
-        ),
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'radio-247' },
-          _react2.default.createElement('input', { type: 'radio', value: '247', name: 'usage-time', id: 'radio-247' }),
-          '24/7'
+          'div',
+          { className: 'wrapper' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'At which time of the day will you be using your TV?'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'Daytime',
+              name: 'usage-time',
+              id: 'daytime-radio',
+              checked: this.state.usageTime === 'Daytime',
+              onChange: this.usageTimeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'daytime-radio', className: 'radiolabel' },
+              'Daytime'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: 'Night-time',
+              name: 'usage-time',
+              id: 'nighttime-radio',
+              checked: this.state.usageTime === 'Night-time',
+              onChange: this.usageTimeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'nighttime-radio', className: 'radiolabel' },
+              'Night-time'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              type: 'radio',
+              value: '24/7',
+              name: 'usage-time',
+              id: 'radio-247',
+              checked: this.state.usageTime === '24/7',
+              onChange: this.usageTimeChange
+            }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'radio-247', className: 'radiolabel' },
+              '24/7'
+            )
+          )
         )
       );
     }
@@ -26519,6 +27228,134 @@ if (true) {
 
 
 
+
+/***/ }),
+
+/***/ "./node_modules/react-router-hash-link/lib/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/react-router-hash-link/lib/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.genericHashLink = genericHashLink;
+exports.HashLink = HashLink;
+exports.NavHashLink = NavHashLink;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var hashFragment = '';
+var observer = null;
+var asyncTimerId = null;
+var scrollFunction = null;
+
+function reset() {
+  hashFragment = '';
+  if (observer !== null) observer.disconnect();
+  if (asyncTimerId !== null) {
+    window.clearTimeout(asyncTimerId);
+    asyncTimerId = null;
+  }
+}
+
+function getElAndScroll() {
+  var element = document.getElementById(hashFragment);
+  if (element !== null) {
+    scrollFunction(element);
+    reset();
+    return true;
+  }
+  return false;
+}
+
+function hashLinkScroll() {
+  // Push onto callback queue so it runs after the DOM is updated
+  window.setTimeout(function () {
+    if (getElAndScroll() === false) {
+      if (observer === null) {
+        observer = new MutationObserver(getElAndScroll);
+      }
+      observer.observe(document, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+      // if the element doesn't show up in 10 seconds, stop checking
+      asyncTimerId = window.setTimeout(function () {
+        reset();
+      }, 10000);
+    }
+  }, 0);
+}
+
+function genericHashLink(props, As) {
+  function handleClick(e) {
+    reset();
+    if (props.onClick) props.onClick(e);
+    if (typeof props.to === 'string') {
+      hashFragment = props.to.split('#').slice(1).join('#');
+    } else if (_typeof(props.to) === 'object' && typeof props.to.hash === 'string') {
+      hashFragment = props.to.hash.replace('#', '');
+    }
+    if (hashFragment !== '') {
+      scrollFunction = props.scroll || function (el) {
+        return props.smooth ? el.scrollIntoView({ behavior: "smooth" }) : el.scrollIntoView();
+      };
+      hashLinkScroll();
+    }
+  }
+
+  var scroll = props.scroll,
+      smooth = props.smooth,
+      filteredProps = _objectWithoutProperties(props, ['scroll', 'smooth']);
+
+  return _react2.default.createElement(
+    As,
+    _extends({}, filteredProps, { onClick: handleClick }),
+    props.children
+  );
+}
+
+function HashLink(props) {
+  return genericHashLink(props, _reactRouterDom.Link);
+}
+
+function NavHashLink(props) {
+  return genericHashLink(props, _reactRouterDom.NavLink);
+}
+
+var propTypes = {
+  onClick: _propTypes2.default.func,
+  children: _propTypes2.default.node,
+  scroll: _propTypes2.default.func,
+  to: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object])
+};
+
+HashLink.propTypes = propTypes;
+NavHashLink.propTypes = propTypes;
 
 /***/ }),
 

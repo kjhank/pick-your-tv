@@ -10,31 +10,61 @@ import {
 } from 'react-router-dom';
 
 class UsageTime extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      usageTime: this.props.usageTime
+    };
+  }
+
+  usageTimeChange = event => this.setState({ usageTime: event.target.value });
+
   render() {
     return (
-      <div>
-        <label htmlFor="daytime-radio">
-          <input
-            type="radio"
-            value="daytime"
-            name="usage-time"
-            id="daytime-radio"
-          />
-          Daytime
-        </label>
-        <label htmlFor="nighttime-radio">
-          <input
-            type="radio"
-            value="nighttime"
-            name="usage-time"
-            id="nighttime-radio"
-          />
-          Night-time
-        </label>
-        <label htmlFor="radio-247">
-          <input type="radio" value="247" name="usage-time" id="radio-247" />
-          24/7
-        </label>
+      <div className={this.props.initialClass + ' usagetime-section'} id="usagetime-section">
+        <h2>Usage time</h2>
+        <div className="wrapper">
+          <h2>At which time of the day will you be using your TV?</h2>
+          <div>
+            <input
+              type="radio"
+              value="Daytime"
+              name="usage-time"
+              id="daytime-radio"
+              checked={this.state.usageTime === 'Daytime'}
+              onChange={this.usageTimeChange}
+            />
+            <label htmlFor="daytime-radio" className="radiolabel">
+              Daytime
+            </label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              value="Night-time"
+              name="usage-time"
+              id="nighttime-radio"
+              checked={this.state.usageTime === 'Night-time'}
+              onChange={this.usageTimeChange}
+            />
+            <label htmlFor="nighttime-radio" className="radiolabel">
+              Night-time
+            </label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              value="24/7"
+              name="usage-time"
+              id="radio-247"
+              checked={this.state.usageTime === '24/7'}
+              onChange={this.usageTimeChange}
+            />
+            <label htmlFor="radio-247" className="radiolabel">
+              24/7
+            </label>
+          </div>
+        </div>
       </div>
     );
   }

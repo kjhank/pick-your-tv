@@ -10,8 +10,16 @@ import {
 } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation.jsx'
 
-class InputOutput extends React.Component {
+class Results extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      specs: this.props.specs
+    }
+  }
+
   render() {
+    console.log(this.state.specs);
     return (
       <div>
         <h2>Results</h2>
@@ -21,4 +29,4 @@ class InputOutput extends React.Component {
   }
 }
 
-export default InputOutput;
+export default Results;

@@ -15,7 +15,7 @@ class Navigation extends React.Component {
       return (
         <nav className="main-nav">
           <Link to={this.props.link}>
-            <i className="fas fa-chevron-circle-right next-icon icon" />
+            <i className="fas fa-play play-icon icon"></i>
           </Link>
 
           <Link to="/">

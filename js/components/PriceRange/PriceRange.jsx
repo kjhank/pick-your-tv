@@ -10,34 +10,61 @@ import {
 } from 'react-router-dom';
 
 class PriceRange extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      priceRange: this.props.priceRange
+    };
+  }
+
+  priceRangeChange = event => this.setState({ priceRange: event.target.value });
+
   render() {
     return (
-      <div>
+      <div className={this.props.initialClass + ' pricerange-section'} id="pricerange-section">
         <h2>Price range</h2>
-        <label htmlFor="radio-highend">
-          <input
-            type="radio"
-            value="high-end"
-            id="radio-highend"
-            name="pricerange"
-          />High-end
-        </label>
-        <label htmlFor="radio-midrange">
-          <input
-            type="radio"
-            value="mid-range"
-            id="radio-midrange"
-            name="pricerange"
-          />Mid-range
-        </label>
-        <label htmlFor="radio-budget">
-          <input
-            type="radio"
-            value="budget-friendly"
-            id="radio-budget"
-            name="pricerange"
-          />Budget-friendly
-        </label>
+        <div className="wrapper">
+          <h2>What is your price range?</h2>
+          <div>
+            <input
+              type="radio"
+              value="high-end"
+              id="radio-highend"
+              name="pricerange"
+              checked={this.state.priceRange === 'high-end'}
+              onChange={this.priceRangeChange}
+            />
+            <label htmlFor="radio-highend" className="radiolabel">
+              High-end
+            </label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              value="mid-range"
+              id="radio-midrange"
+              name="pricerange"
+              checked={this.state.priceRange === 'mid-range'}
+              onChange={this.priceRangeChange}
+            />
+            <label htmlFor="radio-midrange" className="radiolabel">
+              Mid-range
+            </label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              value="budget-friendly"
+              id="radio-budget"
+              name="pricerange"
+              checked={this.state.priceRange === 'budget-friendly'}
+              onChange={this.priceRangeChange}
+            />
+            <label htmlFor="radio-budget" className="radiolabel">
+              Budget-friendly
+            </label>
+          </div>
+        </div>
       </div>
     );
   }

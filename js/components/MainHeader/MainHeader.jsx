@@ -11,7 +11,7 @@ import {
 
 class MainHeader extends React.Component {
   render() {
-    return <header className="main-header">{this.props.title}</header>;
+    return <header className="main-header"><Link to="/">{this.props.title}</Link></header>;
   }
 }
 

@@ -8,6 +8,8 @@ import {
   Switch,
   NavLink
 } from 'react-router-dom';
+
+// import { specs } from '../Context/Context.jsx';
 import Brightness from '../Brightness/Brightness.jsx';
 import BroadcastTv from '../BroadcastTv/BroadcastTv.jsx';
 import Copyleft from '../Copyleft/Copyleft.jsx';
@@ -32,9 +34,34 @@ class App extends React.Component {
     super(props);
     this.state = {
       title: this.props.title,
-      nextLink: 'seating',
-      prevLink: '',
-      choices: {}
+      specs: {
+        distance: 'less than 2m',
+        wideangle: false,
+        mainUse: 'Movies',
+        usageTime: 'Daytime',
+        brightness: 'bright',
+        smartType: 'fast',
+        googleCast: false,
+        airPlay: false,
+        smartHomeControl: false,
+        oneRemote: false,
+        advancedGameMode: false,
+        priceRange: 'high-end',
+        dislikedLg: true,
+        dislikedPanasonic: false,
+        dislikedSamsung: false,
+        dislikedSony: false,
+        dislikedTcl: false,
+        dislikedTpv: false,
+        dvbt: false,
+        dvbc: false,
+        dvbs: false,
+        twinTuner: false,
+        hdmis: 'hdmi4',
+        headphoneJack: false,
+        hdmi20: false,
+        bluetooth: false
+      }
     };
   }
 
@@ -48,8 +75,8 @@ class App extends React.Component {
         <MainHeader title={this.props.title} />
         <Switch>
           <Route exact path="/" component={Landing} />
-          <Route exact path="/main/" component={Main} />
-          <Route exact path="/results/" component={Results} />
+          <Route exact path="/main/" component={() => <Main specs={this.state.specs} />}/>
+          <Route exact path="/results/" component={() => <Results specs={this.state.specs} />}/>
           <Route component={FourOhFour} />
         </Switch>
         <Footer />

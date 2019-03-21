@@ -13,7 +13,7 @@ import Navigation from '../Navigation/Navigation.jsx';
 
 class UsageTime extends React.Component {
   render() {
-    return <div><SplashScreen/><Navigation link="main"/></div>;
+    return <div className="landing"><SplashScreen/><Navigation link="main"/></div>;
   }
 }
 

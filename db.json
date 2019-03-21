@@ -1,0 +1,24 @@
+{
+  "tvs": [
+    {
+      "id": 1,
+      "brand": "Samsung",
+      "model": "NU8"
+    },
+    {
+      "id": 2,
+      "brand": "Panasonic",
+      "model": "FZ800"
+    },
+    {
+      "id": 3,
+      "brand": "Sony",
+      "model": "XF90"
+    },
+    {
+      "id": 4,
+      "brand": "LG",
+      "model": "77W8"
+    }
+  ]
+}

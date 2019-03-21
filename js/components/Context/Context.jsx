@@ -1,0 +1,30 @@
+import React from 'react';
+
+export const specs = React.createContext({
+  distance: 'less than 2m',
+  wideangle: false,
+  mainUse: 'Movies',
+  usageTime: 'Daytime',
+  brightness: 'bright',
+  smartType: 'fast',
+  googleCast: false,
+  airPlay: false,
+  smartHomeControl: false,
+  oneRemote: false,
+  advancedGameMode: false,
+  priceRange: 'high-end',
+  dislikedLg: true,
+  dislikedPanasonic: false,
+  dislikedSamsung: false,
+  dislikedSony: false,
+  dislikedTcl: false,
+  dislikedTpv: false,
+  dvbt: false,
+  dvbc: false,
+  dvbs: false,
+  twinTuner: false,
+  hdmis: 'hdmi4',
+  headphoneJack: false,
+  hdmi20: false,
+  bluetooth: false
+});

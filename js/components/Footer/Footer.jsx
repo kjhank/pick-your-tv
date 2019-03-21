@@ -13,7 +13,7 @@ import Copyleft from '../Copyleft/Copyleft.jsx';
 class Footer extends React.Component {
   render() {
     return (
-      <footer>
+      <footer className="main-footer">
         <Copyleft className="icon copyleft-icon"/> 2019 kjhank
       </footer>
     );
