@@ -9,12 +9,14 @@ import {
   NavLink
 } from 'react-router-dom';
 
+import { specsCtx } from '../Context/Context.jsx';
+
 class Seating extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      distance: this.props.distance,
-      wideangle: this.props.wideangle
+      distance: 'less than 3m',
+      wideangle: false
     };
   }
 
@@ -27,38 +29,53 @@ class Seating extends React.Component {
   };
 
   render() {
-    // console.log(this.state);
-    return (
-      <div className={this.props.initialClass + ' seating-section'} id="seating-section">
-        <h2>Seating</h2>
-        <div className="wrapper">
-          <h2>Whate will be your watching distance?</h2>
-          <label htmlFor="distance" className="selectlabel">
-            Watching distance
-            <select
-              id="distance"
-              value={this.state.distance}
-              onChange={this.distanceChange}
-            >
-              <option value="less than 1m">⩽1m</option>
-              <option value="less than 1.5m">1-1.5m</option>
-              <option value="less than 2m">1.5-2m</option>
-              <option value="less than 2.5m">2-2.5m</option>
-              <option value="less than 3m">2.5-3m</option>
-              <option value="less than 2.5m">3-3.5m</option>
-              <option value="less than 3m">3.5-4m</option>
-            </select>
-          </label>
+    const { Consumer } = specsCtx;
+    const update = this.updateCtx;
 
-          <input
-            type="checkbox"
-            id="wideangle"
-            onChange={this.wideangleChange}
-            checked={this.state.wideangle}
-          />
-          <label htmlFor="wideangle">wide angle seating</label>
-        </div>
-      </div>
+    return (
+      <Consumer>
+        {({ update, specs }) => (
+          <div
+            className={this.props.initialClass + ' seating-section'}
+            id="seating-section"
+          >
+            <h2>Seating</h2>
+            <div className="wrapper">
+              <h2>What will be your watching distance?</h2>
+              <label htmlFor="distance" className="selectlabel">
+                Watching distance
+                <select
+                  id="distance"
+                  value={this.state.distance}
+                  onChange={event => {
+                    update(event);
+                    this.distanceChange(event);
+                  }}
+                >
+                  <option value="less than 1m">⩽1m</option>
+                  <option value="less than 1.5m">1-1.5m</option>
+                  <option value="less than 2m">1.5-2m</option>
+                  <option value="less than 2.5m">2-2.5m</option>
+                  <option value="less than 3m">2.5-3m</option>
+                  <option value="less than 3.5m">3-3.5m</option>
+                  <option value="less than 4m">3.5-4m</option>
+                </select>
+              </label>
+
+              <input
+                type="checkbox"
+                id="wideangle"
+                onChange={event => {
+                  update(event);
+                  this.wideangleChange(event);
+                }}
+                checked={this.state.wideangle}
+              />
+              <label htmlFor="wideangle">wide angle seating</label>
+            </div>
+          </div>
+        )}
+      </Consumer>
     );
   }
 }

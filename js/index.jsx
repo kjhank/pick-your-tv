@@ -17,6 +17,7 @@ import Seating from './components/Seating/Seating.jsx';
 import SmartFeatures from './components/SmartFeatures/SmartFeatures.jsx';
 import SplashScreen from './components/SplashScreen/SplashScreen.jsx';
 import UsageTime from './components/UsageTime/UsageTime.jsx';
+import { specs } from './components/Context/Context.jsx';
 
 export default {
   App,

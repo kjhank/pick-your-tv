@@ -18,8 +18,6 @@
   },
   "homepage": "https://github.com/kjhank/POZ_FER_S_14_REACT_React#readme",
   "dependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
     "react-router-dom": "^4.3.1",
     "react-router-hash-link": "^1.2.1",
     "react-scrollable-anchor": "^0.6.1",
@@ -34,6 +32,8 @@
     "css-loader": "^2.1.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "node-sass": "^4.11.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",

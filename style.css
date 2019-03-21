@@ -409,6 +409,10 @@ a .fa-home {
   height: 5rem;
 }
 
+.results, .summary {
+  margin-top: 4rem;
+}
+
 .visible {
   display: block;
 }

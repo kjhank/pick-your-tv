@@ -29,70 +29,42 @@ class Main extends React.Component {
   }
 
   render() {
-    console.log(this.state.specs.distance);
     return (
       <div>
         <form className="features">
-          <Seating
-            distance={this.state.specs.distance}
-            wideangle={this.state.specs.wideangle}
-          />
+          <Seating />
           <Link to="/main#mainuse-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <MainUse mainUse={this.state.specs.mainUse} />
+          <MainUse />
           <Link to="/main#usagetime-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <UsageTime usageTime={this.state.specs.usageTime} />
+          <UsageTime />
           <Link to="/main#brightness-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <Brightness brightness={this.state.specs.brightness} />
+          <Brightness />
           <Link to="/main#smarttype-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <SmartFeatures
-            smartType={this.state.specs.smartType}
-            googleCast={this.state.specs.googleCast}
-            airPlay={this.state.specs.airPlay}
-            smartHomeControl={this.state.specs.smartHomeControl}
-            oneRemote={this.state.specs.oneRemote}
-            advancedGameMode={this.state.specs.advancedGameMode}
-          />
+          <SmartFeatures />
           <Link to="/main#pricerange-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <PriceRange priceRange={this.state.specs.priceRange} />
+          <PriceRange />
           <Link to="/main#dislikedbrands-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <DislikedBrands
-            dislikedLg={this.state.specs.dislikedLg}
-            dislikedPanasonic={this.state.specs.dislikedPanasonic}
-            dislikedSamsung={this.state.specs.dislikedSamsung}
-            dislikedSony={this.state.specs.dislikedSony}
-            dislikedTcl={this.state.specs.dislikedTcl}
-            dislikedTpv={this.state.specs.dislikedTpv}
-          />
+          <DislikedBrands />
           <Link to="/main#broadcasttv-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <BroadcastTv
-            dvbt={this.state.specs.dvbt}
-            dvbc={this.state.specs.dvbc}
-            dvbs={this.state.specs.dvbs}
-            twinTuner={this.state.specs.twinTuner}
-          />
+          <BroadcastTv />
           <Link to="/main#inputoutput-section">
             <i className="fas fa-chevron-circle-down icon next-section-icon" />
           </Link>
-          <InputOutput
-            hdmis={this.state.specs.hdmis}
-            headphoneJack={this.state.specs.headphoneJack}
-            hdmi20={this.state.specs.hdmi20}
-            bluetooth={this.state.specs.bluetooth}
-          />
+          <InputOutput />
         </form>
       </div>
     );

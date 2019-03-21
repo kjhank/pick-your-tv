@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const specs = React.createContext({
+export const specsCtx = React.createContext({
   distance: 'less than 2m',
   wideangle: false,
   mainUse: 'Movies',
   usageTime: 'Daytime',
   brightness: 'bright',
-  smartType: 'fast',
+  androidTv: false,
   googleCast: false,
   airPlay: false,
   smartHomeControl: false,
@@ -23,7 +23,7 @@ export const specs = React.createContext({
   dvbc: false,
   dvbs: false,
   twinTuner: false,
-  hdmis: 'hdmi4',
+  hdmis: '4',
   headphoneJack: false,
   hdmi20: false,
   bluetooth: false
