@@ -15,7 +15,7 @@ class PriceRange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      priceRange: 'high-end'
+      priceRange: ''
     };
   }
 

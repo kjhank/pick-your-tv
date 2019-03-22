@@ -42,15 +42,15 @@ class App extends React.Component {
         androidTv: false,
         distance: 'less than 2m',
         wideangle: false,
-        mainUse: 'Movies',
-        usageTime: 'Daytime',
-        brightness: 'bright',
+        mainUse: '',
+        usageTime: '',
+        brightness: '',
         googleCast: false,
         airPlay: false,
         smartHomeControl: false,
         oneRemote: false,
         advancedGameMode: false,
-        priceRange: 'high-end',
+        priceRange: '',
         dislikedLg: true,
         dislikedPanasonic: false,
         dislikedSamsung: false,
@@ -69,6 +69,22 @@ class App extends React.Component {
     };
   }
 
+  filterTvs = tvs => {
+    let scores = [];
+    let dislikedBrand = this.state.specs.dislikedLg ? 'LG' : '';
+    let result = tvs.filter(elem => elem.brand !== dislikedBrand);
+    dislikedBrand = this.state.specs.dislikedPanasonic ? 'Panasonic' : '';
+    result = result.filter(elem => elem.brand !== dislikedBrand);
+    dislikedBrand = this.state.specs.dislikedSamsung ? 'Samsung' : '';
+    result = result.filter(elem => elem.brand !== dislikedBrand);
+    dislikedBrand = this.state.specs.dislikedSony ? 'Sony' : '';
+    result = result.filter(elem => elem.brand !== dislikedBrand);
+    result.map((elem, idx) =>
+      scores.push({ name: elem.brand, model: elem.model, idInDb: elem.id, score: 0 })
+    );
+    console.log(result, scores);
+  };
+
   componentDidMount() {
     document.title = this.props.title;
     fetch(apiUrl)
@@ -82,7 +98,6 @@ class App extends React.Component {
     //TODO switch po target.id
     let specItem = event.target.id;
     let tempSpecs = this.state.specs;
-
     switch (specItem) {
       case 'distance':
         this.setState({
@@ -266,20 +281,10 @@ class App extends React.Component {
     const { specs } = this.state;
     const { Provider, Consumer } = specsCtx;
     const update = this.updateCtx;
-    const landing = props => {
-      <Landing />;
-    };
-    const main = props => {
-      <Main />;
-    };
-    const results = props => {
-      <Results />;
-    };
-    const fourohfour = props => {
-      <FourOhFour />;
-    };
+    const filter = this.filterTvs;
+    filter(this.state.tvs);
     return (
-      <Provider value={{ update, specs }}>
+      <Provider value={{ update, filter, specs }}>
         <HashRouter>
           <MainHeader title={this.props.title} />
           <Switch>

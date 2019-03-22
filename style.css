@@ -189,12 +189,12 @@ h6 {
 }
 
 .main-nav {
+  bottom: 2rem;
   display: flex;
   justify-content: space-around;
-  width: 100%;
-  position: fixed;
-  bottom: 2rem;
   left: 0;
+  position: fixed;
+  width: 100%;
 }
 
 a {
@@ -398,19 +398,39 @@ a .fa-home {
   width: 30%;
 }
 
-.features>a {
+.features > a {
   display: flex;
   justify-content: center;
   margin-bottom: 10vh;
 }
 
-.features>a>.next-section-icon {
-  width: 5rem;
+.features > a > .next-section-icon {
   height: 5rem;
+  width: 5rem;
 }
 
-.results, .summary {
+.results,
+.summary {
   margin-top: 4rem;
+}
+
+.error {
+  background: #f06449;
+  border-radius: 50%;
+  font-size: 3rem;
+  left: 50%;
+  padding: 5rem;
+  position: fixed;
+  text-align: center;
+  text-shadow: -0.2rem 0.2rem 0 #59cd90;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+
+.error a {
+  color: #59cd90;
+  text-shadow: none;
 }
 
 .visible {
@@ -439,20 +459,20 @@ a .fa-home {
     border-bottom: 0.1rem solid #59cd90;
     height: auto;
     margin-bottom: 2rem;
-    width: 40%;
     padding: 15vh 0 5vh;
+    width: 40%;
   }
 
   .features > div > .wrapper {
     justify-content: space-around;
-    padding-top: 5vh
+    padding-top: 5vh;
   }
 
   .features > div > .wrapper > div {
     width: 30%;
   }
 
-  .features>a {
+  .features > a {
     display: none;
   }
 }

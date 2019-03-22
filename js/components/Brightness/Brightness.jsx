@@ -15,7 +15,7 @@ class Brightness extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      brightness: 'bright'
+      brightness: ''
     };
   }
 

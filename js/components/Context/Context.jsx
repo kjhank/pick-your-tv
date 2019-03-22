@@ -1,18 +1,18 @@
 import React from 'react';
 
 export const specsCtx = React.createContext({
-  distance: 'less than 2m',
+  distance: '',
   wideangle: false,
-  mainUse: 'Movies',
-  usageTime: 'Daytime',
-  brightness: 'bright',
+  mainUse: '',
+  usageTime: '',
+  brightness: '',
   androidTv: false,
   googleCast: false,
   airPlay: false,
   smartHomeControl: false,
   oneRemote: false,
   advancedGameMode: false,
-  priceRange: 'high-end',
+  priceRange: '',
   dislikedLg: true,
   dislikedPanasonic: false,
   dislikedSamsung: false,

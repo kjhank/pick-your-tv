@@ -242,11 +242,34 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+    _this.filterTvs = function (tvs) {
+      var scores = [];
+      var dislikedBrand = _this.state.specs.dislikedLg ? 'LG' : '';
+      var result = tvs.filter(function (elem) {
+        return elem.brand !== dislikedBrand;
+      });
+      dislikedBrand = _this.state.specs.dislikedPanasonic ? 'Panasonic' : '';
+      result = result.filter(function (elem) {
+        return elem.brand !== dislikedBrand;
+      });
+      dislikedBrand = _this.state.specs.dislikedSamsung ? 'Samsung' : '';
+      result = result.filter(function (elem) {
+        return elem.brand !== dislikedBrand;
+      });
+      dislikedBrand = _this.state.specs.dislikedSony ? 'Sony' : '';
+      result = result.filter(function (elem) {
+        return elem.brand !== dislikedBrand;
+      });
+      result.map(function (elem, idx) {
+        return scores.push({ name: elem.brand, model: elem.model, idInDb: elem.id, score: 0 });
+      });
+      console.log(result, scores);
+    };
+
     _this.updateCtx = function (event) {
       //TODO switch po target.id
       var specItem = event.target.id;
       var tempSpecs = _this.state.specs;
-
       switch (specItem) {
         case 'distance':
           _this.setState({
@@ -433,15 +456,15 @@ var App = function (_React$Component) {
         androidTv: false,
         distance: 'less than 2m',
         wideangle: false,
-        mainUse: 'Movies',
-        usageTime: 'Daytime',
-        brightness: 'bright',
+        mainUse: '',
+        usageTime: '',
+        brightness: '',
         googleCast: false,
         airPlay: false,
         smartHomeControl: false,
         oneRemote: false,
         advancedGameMode: false,
-        priceRange: 'high-end',
+        priceRange: '',
         dislikedLg: true,
         dislikedPanasonic: false,
         dislikedSamsung: false,
@@ -481,21 +504,11 @@ var App = function (_React$Component) {
           Consumer = _Context.specsCtx.Consumer;
 
       var update = this.updateCtx;
-      var landing = function landing(props) {
-        _react2.default.createElement(_Landing2.default, null);
-      };
-      var main = function main(props) {
-        _react2.default.createElement(_Main2.default, null);
-      };
-      var results = function results(props) {
-        _react2.default.createElement(_Results2.default, null);
-      };
-      var fourohfour = function fourohfour(props) {
-        _react2.default.createElement(_FourOhFour2.default, null);
-      };
+      var filter = this.filterTvs;
+      filter(this.state.tvs);
       return _react2.default.createElement(
         Provider,
-        { value: { update: update, specs: specs } },
+        { value: { update: update, filter: filter, specs: specs } },
         _react2.default.createElement(
           _reactRouterDom.HashRouter,
           null,
@@ -572,7 +585,7 @@ var Brightness = function (_React$Component) {
     };
 
     _this.state = {
-      brightness: 'bright'
+      brightness: ''
     };
     return _this;
   }
@@ -933,18 +946,18 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var specsCtx = exports.specsCtx = _react2.default.createContext({
-  distance: 'less than 2m',
+  distance: '',
   wideangle: false,
-  mainUse: 'Movies',
-  usageTime: 'Daytime',
-  brightness: 'bright',
+  mainUse: '',
+  usageTime: '',
+  brightness: '',
   androidTv: false,
   googleCast: false,
   airPlay: false,
   smartHomeControl: false,
   oneRemote: false,
   advancedGameMode: false,
-  priceRange: 'high-end',
+  priceRange: '',
   dislikedLg: true,
   dislikedPanasonic: false,
   dislikedSamsung: false,
@@ -1383,7 +1396,14 @@ var FourOhFour = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'error' },
-        'Nothing to see here, move along'
+        'Nothing to see here, move along.',
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/' },
+          'Go back'
+        ),
+        '.'
       );
     }
   }]);
@@ -1967,7 +1987,7 @@ var MainUse = function (_React$Component) {
     };
 
     _this.state = {
-      mainUse: 'Movies'
+      mainUse: ''
     };
     return _this;
   }
@@ -2230,7 +2250,7 @@ var PriceRange = function (_React$Component) {
     };
 
     _this.state = {
-      priceRange: 'high-end'
+      priceRange: ''
     };
     return _this;
   }
@@ -2383,6 +2403,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var apiUrl = 'http://localhost:3000/tvs/';
+
 var Results = function (_React$Component) {
   _inherits(Results, _React$Component);
 
@@ -2392,14 +2414,29 @@ var Results = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).call(this, props));
 
     _this.state = {
-      specs: _this.props.specs
+      specs: _this.props.specs,
+      tvs: []
     };
     return _this;
   }
 
   _createClass(Results, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      document.title = this.props.title;
+      fetch(apiUrl).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this2.setState({ tvs: data });
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var Consumer = _Context.specsCtx.Consumer;
 
       var update = this.updateCtx;
@@ -2409,9 +2446,11 @@ var Results = function (_React$Component) {
         null,
         function (_ref) {
           var update = _ref.update,
+              filter = _ref.filter,
               specs = _ref.specs;
 
           console.log(specs);
+          filter(_this3.state.tvs);
           return _react2.default.createElement(
             'div',
             { className: 'results' },
@@ -3130,7 +3169,7 @@ var UsageTime = function (_React$Component) {
     };
 
     _this.state = {
-      usageTime: 'Daytime'
+      usageTime: ''
     };
     return _this;
   }

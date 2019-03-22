@@ -11,7 +11,7 @@ import {
 
 class FourOhFour extends React.Component {
   render() {
-    return <div className="error">Nothing to see here, move along</div>;
+    return <div className="error">Nothing to see here, move along.<br/><Link to="/">Go back</Link>.</div>;
   }
 }
 

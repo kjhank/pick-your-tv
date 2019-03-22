@@ -11,13 +11,25 @@ import {
 import Navigation from '../Navigation/Navigation.jsx';
 import { specsCtx } from '../Context/Context.jsx';
 
+let apiUrl = 'http://localhost:3000/tvs/';
+
 class Results extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      specs: this.props.specs
+      specs: this.props.specs,
+      tvs: []
     };
   }
+
+    componentDidMount() {
+      document.title = this.props.title;
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ tvs: data });
+        });
+    }
 
   render() {
     const { Consumer } = specsCtx;
@@ -25,8 +37,9 @@ class Results extends React.Component {
 
     return (
       <Consumer>
-        {({ update, specs }) => {
+        {({ update, filter, specs }) => {
           console.log(specs);
+          filter(this.state.tvs);
           return (
             <div className="results">
               <h2>Results</h2>
