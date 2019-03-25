@@ -146,6 +146,8 @@ table {
 
 body {
   background-color: #dadad9;
+  /* background: linear-gradient(#dadad9, #fff); */
+  /* background: linear-gradient(0.15turn, #dadad9, #fff); */
   color: #234669;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
@@ -195,6 +197,7 @@ h6 {
   left: 0;
   position: fixed;
   width: 100%;
+  padding: 1rem 0;
 }
 
 a {
@@ -378,11 +381,13 @@ a .fa-home {
   width: 100%;
 }
 
-.features > div > h2 {
+.features > div > h2,
+.results > div > h2,
+.summary > div > h2 {
   background: #f06449;
   border-radius: 50%;
   font-size: 3rem;
-  margin-top: 2rem;
+  margin: 2rem auto;
   padding: 2rem;
   text-shadow: -0.2rem 0.2rem 0 #59cd90;
   transform: rotate(-15deg);
@@ -409,9 +414,18 @@ a .fa-home {
   width: 5rem;
 }
 
+.inputoutput-section>div:last-of-type, .summary>.wrapper {
+  margin-bottom: 8rem;
+}
+
 .results,
 .summary {
   margin-top: 4rem;
+  font-size: 2rem;
+}
+
+.results ol {
+  list-style-type: decimal;
 }
 
 .error {
@@ -428,6 +442,10 @@ a .fa-home {
   width: 80%;
 }
 
+.wrapper p {
+  padding: 1rem;
+}
+
 .error a {
   color: #59cd90;
   text-shadow: none;
@@ -442,11 +460,18 @@ a .fa-home {
 }
 
 @media (min-device-width: 720px) {
-  .features > div > h2 {
+  #app > div {
+    width: 80%;
+    margin: auto;
+  }
+  .features > div > h2,
+  .results > div > h2,
+  .summary > div > h2 {
     font-size: 2rem;
     padding: 2rem;
     transform: rotate(-10deg);
     width: 50%;
+    margin: 4rem auto;
   }
 
   .features {

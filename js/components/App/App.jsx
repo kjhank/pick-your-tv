@@ -31,6 +31,7 @@ import Summary from '../Summary/Summary.jsx';
 import UsageTime from '../UsageTime/UsageTime.jsx';
 
 let apiUrl = 'http://localhost:3000/tvs/';
+let scores = [];
 
 class App extends React.Component {
   constructor(props) {
@@ -70,7 +71,6 @@ class App extends React.Component {
   }
 
   filterTvs = tvs => {
-    let scores = [];
     let dislikedBrand = this.state.specs.dislikedLg ? 'LG' : '';
     let result = tvs.filter(elem => elem.brand !== dislikedBrand);
     dislikedBrand = this.state.specs.dislikedPanasonic ? 'Panasonic' : '';
@@ -79,10 +79,25 @@ class App extends React.Component {
     result = result.filter(elem => elem.brand !== dislikedBrand);
     dislikedBrand = this.state.specs.dislikedSony ? 'Sony' : '';
     result = result.filter(elem => elem.brand !== dislikedBrand);
-    result.map((elem, idx) =>
-      scores.push({ name: elem.brand, model: elem.model, idInDb: elem.id, score: 0 })
+    result = result.filter(
+      elem => elem.spec.hdmi20 === this.state.specs.hdmi20
     );
-    console.log(result, scores);
+    console.log(result);
+    return result;
+  };
+
+  calculateScores = result => {
+    // result.map(elem =>
+    //   scores.push({
+    //     name: elem.brand,
+    //     model: elem.model,
+    //     idInDb: elem.id,
+    //     alternateNames: elem.alternateNames,
+    //     inputLag: elem.spec.inputLag,
+    //     motion: elem.spec.motion
+    //   })
+    // );
+    return result;
   };
 
   componentDidMount() {
@@ -282,9 +297,10 @@ class App extends React.Component {
     const { Provider, Consumer } = specsCtx;
     const update = this.updateCtx;
     const filter = this.filterTvs;
-    filter(this.state.tvs);
+    const scores = this.calculateScores;
+    scores(filter(this.state.tvs));
     return (
-      <Provider value={{ update, filter, specs }}>
+      <Provider value={{ update, filter, scores, specs }}>
         <HashRouter>
           <MainHeader title={this.props.title} />
           <Switch>

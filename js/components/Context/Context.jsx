@@ -23,7 +23,7 @@ export const specsCtx = React.createContext({
   dvbc: false,
   dvbs: false,
   twinTuner: false,
-  hdmis: '4',
+  hdmis: '',
   headphoneJack: false,
   hdmi20: false,
   bluetooth: false

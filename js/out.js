@@ -233,6 +233,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var apiUrl = 'http://localhost:3000/tvs/';
+var scores = [];
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -243,7 +244,6 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.filterTvs = function (tvs) {
-      var scores = [];
       var dislikedBrand = _this.state.specs.dislikedLg ? 'LG' : '';
       var result = tvs.filter(function (elem) {
         return elem.brand !== dislikedBrand;
@@ -260,10 +260,25 @@ var App = function (_React$Component) {
       result = result.filter(function (elem) {
         return elem.brand !== dislikedBrand;
       });
-      result.map(function (elem, idx) {
-        return scores.push({ name: elem.brand, model: elem.model, idInDb: elem.id, score: 0 });
+      result = result.filter(function (elem) {
+        return elem.spec.hdmi20 === _this.state.specs.hdmi20;
       });
-      console.log(result, scores);
+      console.log(result);
+      return result;
+    };
+
+    _this.calculateScores = function (result) {
+      // result.map(elem =>
+      //   scores.push({
+      //     name: elem.brand,
+      //     model: elem.model,
+      //     idInDb: elem.id,
+      //     alternateNames: elem.alternateNames,
+      //     inputLag: elem.spec.inputLag,
+      //     motion: elem.spec.motion
+      //   })
+      // );
+      return result;
     };
 
     _this.updateCtx = function (event) {
@@ -505,10 +520,11 @@ var App = function (_React$Component) {
 
       var update = this.updateCtx;
       var filter = this.filterTvs;
-      filter(this.state.tvs);
+      var scores = this.calculateScores;
+      scores(filter(this.state.tvs));
       return _react2.default.createElement(
         Provider,
-        { value: { update: update, filter: filter, specs: specs } },
+        { value: { update: update, filter: filter, scores: scores, specs: specs } },
         _react2.default.createElement(
           _reactRouterDom.HashRouter,
           null,
@@ -968,7 +984,7 @@ var specsCtx = exports.specsCtx = _react2.default.createContext({
   dvbc: false,
   dvbs: false,
   twinTuner: false,
-  hdmis: '4',
+  hdmis: '',
   headphoneJack: false,
   hdmi20: false,
   bluetooth: false
@@ -2447,39 +2463,40 @@ var Results = function (_React$Component) {
         function (_ref) {
           var update = _ref.update,
               filter = _ref.filter,
+              scores = _ref.scores,
               specs = _ref.specs;
 
-          console.log(specs);
-          filter(_this3.state.tvs);
+          // console.log(specs);
+
+          // console.log(scores(filter(this.state.tvs)));
+          var result = scores(filter(_this3.state.tvs));
           return _react2.default.createElement(
             'div',
             { className: 'results' },
             _react2.default.createElement(
-              'h2',
-              null,
-              'Results'
-            ),
-            _react2.default.createElement(
               'div',
-              null,
+              { className: 'wrapper' },
               _react2.default.createElement(
-                'ul',
+                'h2',
                 null,
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  '1'
-                ),
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  '2'
-                ),
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  '3'
-                )
+                'Results'
+              ),
+              _react2.default.createElement(
+                'ol',
+                null,
+                result.map(function (elem, idx) {
+                  return _react2.default.createElement(
+                    'li',
+                    { key: idx },
+                    _react2.default.createElement(
+                      'h3',
+                      null,
+                      elem.brand,
+                      ' ',
+                      elem.model
+                    )
+                  );
+                })
               )
             ),
             _react2.default.createElement(_Navigation2.default, null)
@@ -3078,33 +3095,43 @@ var Summary = function (_React$Component) {
             'div',
             { className: 'summary' },
             _react2.default.createElement(
-              'h2',
-              null,
-              'Summary'
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              ' Your seating distance is ',
-              specs.distance,
-              ' and you ',
-              specs.wideangle ? '' : 'don\'t',
-              ' need a wide-angle TV. The main use for your TV is ',
-              specs.mainUse,
-              ' and you usually watch during ',
-              specs.usageTime,
-              '. You usually watch in a ',
-              specs.brightness,
-              '-lit room. You prefer a ',
-              specs.androidTv ? 'powerful but slower' : 'fast and intuitive',
-              ' smart TV platform with ',
-              specs.googleCast ? 'Google Cast,' : '',
-              ' ',
-              specs.airPlay ? 'Apple AirPlay,' : '',
-              ' ',
-              specs.smartHomeControl ? 'control of your smart home,' : ''
-            ),
-            _react2.default.createElement(_Navigation2.default, { link: 'results' })
+              'div',
+              { className: 'wrapper' },
+              _react2.default.createElement(
+                'h2',
+                null,
+                'Summary'
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                ' ',
+                'Your seating distance is ',
+                specs.distance,
+                ' and you',
+                ' ',
+                specs.wideangle ? '' : "don't",
+                ' need a wide-angle TV. The main use for your TV is ',
+                specs.mainUse,
+                ' and you usually watch during ',
+                specs.usageTime,
+                '. You usually watch in a',
+                ' ',
+                specs.brightness,
+                '-lit room. You prefer a',
+                ' ',
+                specs.androidTv ? 'powerful but slower' : 'fast and intuitive',
+                ' ',
+                'smart TV platform with',
+                ' ',
+                specs.googleCast ? 'Google Cast,' : '',
+                ' ',
+                specs.airPlay ? 'Apple AirPlay,' : '',
+                ' ',
+                specs.smartHomeControl ? 'control of your smart home,' : ''
+              ),
+              _react2.default.createElement(_Navigation2.default, { link: 'results' })
+            )
           );
         }
       );

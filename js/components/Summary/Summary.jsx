@@ -30,9 +30,25 @@ class Summary extends React.Component {
           console.log(Object.values(specs));
           return (
             <div className="summary">
-              <h2>Summary</h2>
-              <p> Your seating distance is {specs.distance} and you {specs.wideangle ? '' : 'don\'t' } need a wide-angle TV. The main use for your TV is {specs.mainUse} and you usually watch during {specs.usageTime}. You usually watch in a {specs.brightness}-lit room. You prefer a {specs.androidTv ? 'powerful but slower' : 'fast and intuitive'} smart TV platform with {specs.googleCast ? 'Google Cast,' : ''} {specs.airPlay ? 'Apple AirPlay,' : ''} {specs.smartHomeControl ? 'control of your smart home,' : ''}</p>
-              <Navigation link="results"/>
+              <div className="wrapper">
+                <h2>Summary</h2>
+                <p>
+                  {' '}
+                  Your seating distance is {specs.distance} and you{' '}
+                  {specs.wideangle ? '' : "don't"} need a wide-angle TV. The
+                  main use for your TV is {specs.mainUse} and you usually watch
+                  during {specs.usageTime}. You usually watch in a{' '}
+                  {specs.brightness}-lit room. You prefer a{' '}
+                  {specs.androidTv
+                    ? 'powerful but slower'
+                    : 'fast and intuitive'}{' '}
+                  smart TV platform with{' '}
+                  {specs.googleCast ? 'Google Cast,' : ''}{' '}
+                  {specs.airPlay ? 'Apple AirPlay,' : ''}{' '}
+                  {specs.smartHomeControl ? 'control of your smart home,' : ''}
+                </p>
+                <Navigation link="results" />
+              </div>
             </div>
           );
         }}

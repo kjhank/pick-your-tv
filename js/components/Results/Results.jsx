@@ -22,14 +22,14 @@ class Results extends React.Component {
     };
   }
 
-    componentDidMount() {
-      document.title = this.props.title;
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          this.setState({ tvs: data });
-        });
-    }
+  componentDidMount() {
+    document.title = this.props.title;
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ tvs: data });
+      });
+  }
 
   render() {
     const { Consumer } = specsCtx;
@@ -37,18 +37,22 @@ class Results extends React.Component {
 
     return (
       <Consumer>
-        {({ update, filter, specs }) => {
-          console.log(specs);
-          filter(this.state.tvs);
+        {({ update, filter, scores, specs }) => {
+          // console.log(specs);
+
+          // console.log(scores(filter(this.state.tvs)));
+          let result = scores(filter(this.state.tvs));
           return (
             <div className="results">
-              <h2>Results</h2>
-              <div>
-                <ul>
-                  <li>1</li>
-                  <li>2</li>
-                  <li>3</li>
-                </ul>
+              <div className="wrapper">
+                <h2>Results</h2>
+                <ol>
+                  {result.map((elem, idx) => (
+                    <li key={idx}>
+                      <h3>{elem.brand} {elem.model}</h3>
+                    </li>
+                  ))}
+                </ol>
               </div>
               <Navigation />
             </div>
